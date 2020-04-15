@@ -1,0 +1,4 @@
+<resources>
+    <!-- 尺寸资源 -->
+    <dimen name="word_size">20sp</dimen>
+</resources>
