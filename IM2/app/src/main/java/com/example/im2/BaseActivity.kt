@@ -1,9 +1,15 @@
 package com.example.homeworkplatform
 
+import android.app.ProgressDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity: AppCompatActivity() {
+
+    val progressDialog by lazy {
+        ProgressDialog(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(getLayoutResId())
@@ -17,4 +23,15 @@ abstract class BaseActivity: AppCompatActivity() {
 
     /*抽象类，子类必须实现这个方法返回布局资源的id*/
     abstract fun getLayoutResId(): Int
+
+    /*显示进度条*/
+    fun showProgress(message:String){
+        progressDialog.setMessage(message)
+        progressDialog.show()
+    }
+
+    /*隐藏进度条*/
+    fun dissmissProgress(){
+        progressDialog.dismiss()
+    }
 }
