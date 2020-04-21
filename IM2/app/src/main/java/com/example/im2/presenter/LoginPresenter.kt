@@ -43,10 +43,10 @@ class LoginPresenter(val view:LoginContract.View):LoginContract.Presenter {
 
             override fun onSuccess() {
                 Log.d("tag","333")
-                //EMClient.getInstance().groupManager().loadAllGroups()
-                //EMClient.getInstance().chatManager().loadAllConversations()
+                EMClient.getInstance().groupManager().loadAllGroups()
+                EMClient.getInstance().chatManager().loadAllConversations()
                 Log.d("tag","444")
-               // uiThread { view.onLoggedInSuccess() }
+                uiThread { view.onLoggedInSuccess() }
             }
 
             override fun onProgress(p0: Int, p1: String?) {
@@ -56,7 +56,7 @@ class LoginPresenter(val view:LoginContract.View):LoginContract.Presenter {
 
             override fun onError(p0: Int, p1: String?) {
                 Log.d("tag","555")
-              //  uiThread { view.onLoggedInFailed() }
+                uiThread { view.onLoggedInFailed() }
             }
 
         })

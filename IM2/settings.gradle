@@ -1,2 +1,2 @@
-include ':app', ':easeui'
+include ':app'
 rootProject.name='IM2'
