@@ -1,13 +1,19 @@
 package com.example.homeworkplatform
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity: AppCompatActivity() {
 
     val progressDialog by lazy {
         ProgressDialog(this)
+    }
+
+    val inputMethodManager by lazy{
+        getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,5 +39,11 @@ abstract class BaseActivity: AppCompatActivity() {
     /*隐藏进度条*/
     fun dissmissProgress(){
         progressDialog.dismiss()
+    }
+
+    /*隐藏软键盘*/
+    fun hideSoftKeyboard()
+    {
+        inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken,0)
     }
 }

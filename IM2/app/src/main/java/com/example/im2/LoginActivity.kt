@@ -1,8 +1,10 @@
 package com.example.im2
 
+import android.content.pm.PackageManager
 import android.util.Log
 import android.view.KeyEvent
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import com.example.homeworkplatform.BaseActivity
 import com.example.im2.contract.LoginContract
 import com.example.im2.presenter.LoginPresenter
@@ -10,6 +12,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import org.w3c.dom.Text
+import java.util.jar.Manifest
 
 class LoginActivity:BaseActivity(),LoginContract.View {
 
@@ -33,11 +36,41 @@ class LoginActivity:BaseActivity(),LoginContract.View {
     }
 
     fun login(){
-        val userNameString = account.text.toString()
-        val pwdString = password.text.toString()
-        Log.d("tag","888")
-        presenter.login(userNameString,pwdString)
-        Log.d("tag","presenter.login")
+        //隐藏软键盘
+        hideSoftKeyboard()
+        //检查是否有写磁盘的权限
+        if(hasWriteExternalStoragePermission()) {
+            val userNameString = account.text.toString()
+            val pwdString = password.text.toString()
+            Log.d("tag", "888")
+            presenter.login(userNameString, pwdString)
+            Log.d("tag", "presenter.login")
+        }else applyWriteExternalStoragePermission()
+
+    }
+
+    /*申请权限*/
+    private fun applyWriteExternalStoragePermission() {
+        val permissions = arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        ActivityCompat.requestPermissions(this,permissions,0)
+        //就会弹一个框让用户选择，然后回调
+    }
+
+    private fun hasWriteExternalStoragePermission():Boolean {
+        val result = ActivityCompat.checkSelfPermission(this,android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,//上面填的请求码
+        permissions: Array<out String>,//要申请的权限
+        grantResults: IntArray//结果，是否申请成功
+    ) {
+        if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        {
+            //用户同意权限，开始登录
+            login()
+        }else toast(R.string.permission_denied)
     }
 
     override fun getLayoutResId(): Int
