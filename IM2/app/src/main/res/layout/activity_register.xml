@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:text="注册"
         android:textSize="@dimen/word_size"
-        android:layout_below="@+id/conform_password"
+        android:layout_below="@+id/confirm_password"
         android:gravity="center_horizontal"
         />
 
@@ -54,7 +54,7 @@
         />
 
     <EditText
-        android:id="@+id/conform_password"
+        android:id="@+id/confirm_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/pwd_word"
