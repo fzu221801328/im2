@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
+
+    <!-- 登陆界面：账号，密码，登录按钮-->
+    <TextView
+        android:id="@+id/account_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="账号"
+        android:textSize="@dimen/word_size"
+        android:paddingBottom="50dp"
+        />
+
+    <TextView
+        android:id="@+id/pwd_word"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="密码"
+        android:textSize="@dimen/word_size"
+        android:layout_below="@+id/account_word"
+        />
+
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="注册"
+        android:textSize="@dimen/word_size"
+        android:layout_below="@+id/conform_password"
+        android:gravity="center_horizontal"
+        />
+
+    <!-- 输入框 -->
+    <EditText
+        android:id="@+id/account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/account_word"
+        android:inputType="text"
+        android:imeOptions="actionNext"
+        />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/pwd_word"
+        android:layout_below="@+id/account_word"
+        android:inputType="textPassword"
+        android:imeOptions="actionGo"
+        />
+
+    <EditText
+        android:id="@+id/conform_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/pwd_word"
+        android:layout_below="@+id/password"
+        android:inputType="textPassword"
+        android:imeOptions="actionGo"
+        android:hint="确认密码"
+        />
+
+
+
+
+
+</RelativeLayout>

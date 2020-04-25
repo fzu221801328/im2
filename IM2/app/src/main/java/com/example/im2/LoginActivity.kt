@@ -33,6 +33,10 @@ class LoginActivity:BaseActivity(),LoginContract.View {
             }
 
         })
+
+        register.setOnClickListener {
+            startActivity<RegisterActivity>()
+        }
     }
 
     fun login(){
