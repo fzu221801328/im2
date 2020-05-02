@@ -39,7 +39,9 @@ class RegisterPresenter(val view:RegisterContract.View):RegisterContract.Present
                     registerEaseMob(userName,password)
                 } else {
                     //注册失败
-                    view.onRegisterFailed()
+                    //202是用户名已存在的错误码
+                    if(ex.errorCode == 202) view.onUserExist()
+                    else view.onRegisterFailed()
                 }
             }
         })
