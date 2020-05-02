@@ -1,4 +1,4 @@
-package com.example.im2
+package com.example.im2.ui.activity
 
 import android.content.pm.PackageManager
 import android.util.Log
@@ -6,13 +6,12 @@ import android.view.KeyEvent
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import com.example.homeworkplatform.BaseActivity
+import com.example.im2.R
 import com.example.im2.contract.LoginContract
 import com.example.im2.presenter.LoginPresenter
 import kotlinx.android.synthetic.main.activity_login.*
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
-import org.w3c.dom.Text
-import java.util.jar.Manifest
 
 class LoginActivity:BaseActivity(),LoginContract.View {
 

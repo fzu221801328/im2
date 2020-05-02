@@ -1,11 +1,11 @@
-package com.example.im2
+package com.example.im2.ui.activity
 
 import android.view.KeyEvent
 import android.widget.TextView
 import com.example.homeworkplatform.BaseActivity
+import com.example.im2.R
 import com.example.im2.contract.RegisterContract
 import com.example.im2.presenter.RegisterPresenter
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.account
 import kotlinx.android.synthetic.main.activity_register.password

@@ -1,7 +1,8 @@
-package com.example.im2
+package com.example.im2.ui.activity
 
 import android.os.Handler
 import com.example.homeworkplatform.BaseActivity
+import com.example.im2.R
 import com.example.im2.contract.SplashContract
 import com.example.im2.presenter.SplashPresenter
 import org.jetbrains.anko.startActivity
@@ -36,7 +37,7 @@ class SplashActivity:BaseActivity(),SplashContract.View{
                 startActivity<LoginActivity>()
                 finish()
             }
-        },DELAY)
+        }, DELAY)
 
     }
 
