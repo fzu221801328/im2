@@ -56,6 +56,7 @@ class RegisterActivity:BaseActivity(),RegisterContract.View {
 
     override fun onRegisterSuccess() {
         dissmissProgress()
+        toast(R.string.register_success)
         finish()
     }
 
