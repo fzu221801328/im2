@@ -2,10 +2,15 @@ package com.example.im2.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.homeworkplatform.BaseActivity
 import com.example.im2.R
 import com.example.im2.factory.FragmentFactory
+import com.hyphenate.chat.EMClient
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_dynamic.*
+import org.jetbrains.anko.toast
+
 //我不知道具体是怎样，看起来是，数据库+服务器端，应该不用别的知识
 class MainActivity : BaseActivity() {
 
@@ -20,5 +25,7 @@ class MainActivity : BaseActivity() {
             beginTransaction.replace(R.id.fragment_frame,FragmentFactory.instance.getFragment(tabId)!!)
             beginTransaction.commit()
         }
+
+
     }
 }
