@@ -5,12 +5,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworkplatform.BaseFragment
 import com.example.im2.R
 import com.example.im2.adapter.ContactListAdapter
+import com.example.im2.contract.ContactContract
+import com.example.im2.presenter.ContactPresenter
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.toast
 
-class ContactFragment:BaseFragment() {
+class ContactFragment:BaseFragment(),ContactContract.View {
     override fun getLayoutResId(): Int
         = R.layout.fragment_contacts
+
+    val presenter = ContactPresenter(this)
 
     override fun init() {
         super.init()
@@ -22,6 +27,7 @@ class ContactFragment:BaseFragment() {
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
             isRefreshing = true
+            setOnRefreshListener { presenter.loadContacts() }
         }
 
         recyclerView.apply {
@@ -30,5 +36,17 @@ class ContactFragment:BaseFragment() {
             adapter = ContactListAdapter(context)
         }
 
+        presenter.loadContacts()
+    }
+
+    override fun onLoadContractsSuccess() {
+        swipeRefreshLayout.isRefreshing = false
+        //recyclerview列表要刷新
+        recyclerView.adapter!!.notifyDataSetChanged()
+    }
+
+    override fun onLoadContractsFailed() {
+        swipeRefreshLayout.isRefreshing = false
+        context!!.toast(R.string.load_contacts_failed)
     }
 }
