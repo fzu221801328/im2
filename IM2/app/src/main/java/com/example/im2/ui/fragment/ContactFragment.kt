@@ -7,8 +7,10 @@ import com.example.im2.R
 import com.example.im2.adapter.ContactListAdapter
 import com.example.im2.contract.ContactContract
 import com.example.im2.presenter.ContactPresenter
+import com.example.im2.ui.activity.AddFriendActivity
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
 class ContactFragment:BaseFragment(),ContactContract.View {
@@ -23,7 +25,7 @@ class ContactFragment:BaseFragment(),ContactContract.View {
         headerTitle.text = getString(R.string.contact)
         /*设置+号可见*/
         add.visibility = View.VISIBLE
-        add.setOnClickListener { context.startActivity<>() }
+        add.setOnClickListener { context!!.startActivity<AddFriendActivity>() }
         /*设置下拉刷新颜色不然是黑色*/
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
