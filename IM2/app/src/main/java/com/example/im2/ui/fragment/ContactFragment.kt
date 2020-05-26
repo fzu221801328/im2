@@ -23,6 +23,7 @@ class ContactFragment:BaseFragment(),ContactContract.View {
         headerTitle.text = getString(R.string.contact)
         /*设置+号可见*/
         add.visibility = View.VISIBLE
+        add.setOnClickListener { context.startActivity<>() }
         /*设置下拉刷新颜色不然是黑色*/
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
@@ -33,7 +34,7 @@ class ContactFragment:BaseFragment(),ContactContract.View {
         recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(context)
-            adapter = ContactListAdapter(context)
+            adapter = ContactListAdapter(context,presenter.contactListItems)//数据集合传进去
         }
 
         presenter.loadContacts()
