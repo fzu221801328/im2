@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworkplatform.BaseActivity
 import com.example.im2.R
+import com.example.im2.adapter.MessageListAdapter
 import com.example.im2.contract.ChatContract
 import com.example.im2.presenter.ChatPresenter
 import kotlinx.android.synthetic.main.activity_chat.*
@@ -34,9 +36,17 @@ class ChatActivity:BaseActivity(),ChatContract.View {
         initEditText()
         Log.d(TAG,"initEditText")
 
+        initRecyclerView()
         //发送消息
-        send.setOnClickListener {
-            send()
+        send.setOnClickListener { send() }
+    }
+
+    private fun initRecyclerView() {
+        recyclerView.apply{
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(context)
+            Log.d(TAG,"开始设置adapter")
+            adapter = MessageListAdapter(context,presenter.messages)
         }
     }
 
