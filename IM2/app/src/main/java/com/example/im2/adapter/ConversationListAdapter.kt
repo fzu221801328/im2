@@ -5,9 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.im2.ui.widget.ConversationListItemView
+import com.hyphenate.chat.EMConversation
 
 //list
-class ConversationListAdapter(val context: Context):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+//6 想办法获得数据以后，创建了数据集合，设置到adapter里,,,再把它val成一个属性
+
+class ConversationListAdapter(
+    val context: Context,
+    val conversations: MutableList<EMConversation>
+):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     //2定义好viewholder类后，在这里返回一个viewholder
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -17,7 +23,8 @@ class ConversationListAdapter(val context: Context):RecyclerView.Adapter<Recycle
     }
     //5 暂时完成了adapter，可以去赋值了
 
-    override fun getItemCount(): Int = 30
+    //7 设置真实的大小
+    override fun getItemCount(): Int = conversations.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
