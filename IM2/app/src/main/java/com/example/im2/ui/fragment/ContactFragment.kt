@@ -1,5 +1,6 @@
 package com.example.im2.ui.fragment
 
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworkplatform.BaseFragment
@@ -8,6 +9,7 @@ import com.example.im2.adapter.ContactListAdapter
 import com.example.im2.contract.ContactContract
 import com.example.im2.presenter.ContactPresenter
 import com.example.im2.ui.activity.AddFriendActivity
+import com.example.im2.ui.activity.ChatActivity
 import kotlinx.android.synthetic.main.fragment_contacts.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.startActivity
@@ -19,6 +21,8 @@ class ContactFragment:BaseFragment(),ContactContract.View {
 
     val presenter = ContactPresenter(this)
 
+    val TAG = "ContactFragment"
+
     override fun init() {
         super.init()
         /*设置标题*/
@@ -26,6 +30,8 @@ class ContactFragment:BaseFragment(),ContactContract.View {
         /*设置+号可见*/
         add.visibility = View.VISIBLE
         add.setOnClickListener { context!!.startActivity<AddFriendActivity>() }
+
+
         /*设置下拉刷新颜色不然是黑色*/
         swipeRefreshLayout.apply {
             setColorSchemeResources(R.color.qq_blue)
@@ -40,6 +46,14 @@ class ContactFragment:BaseFragment(),ContactContract.View {
         }
 
         presenter.loadContacts()
+
+
+        send_message_btn.setOnClickListener {
+            var userName = chat_with.text.trim().toString()
+            context!!.startActivity<ChatActivity>("username" to userName)
+            Log.d(TAG,"userName = $userName  跳转到ChatActivity")
+        }
+
     }
 
     override fun onLoadContractsSuccess() {
