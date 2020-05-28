@@ -36,8 +36,12 @@ class MessageListAdapter(val context: Context, val messages:List<EMMessage>): Re
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if(getItemViewType(position) == ITEM_TYPE_SEND_MESSAGE){
-            val sendMessageItemView = holder.itemView as SendMessageItemView
+            val sendMessageItemView = holder?.itemView as SendMessageItemView
             sendMessageItemView.bindView(messages[position])
+        }else{
+            val receiveMessageItemView = holder?.itemView as ReceiveMessageItemView
+            receiveMessageItemView.bindView(messages[position])
+
         }
     }
 
