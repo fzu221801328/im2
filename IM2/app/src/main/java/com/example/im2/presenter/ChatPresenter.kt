@@ -8,6 +8,10 @@ import org.jetbrains.anko.doAsync
 
 class ChatPresenter(val view:ChatContract.View):ChatContract.Presenter {
 
+    companion object{
+        val PAGE_SIZE = 10
+    }
+
     val messages = mutableListOf<EMMessage>()
 
     override fun sendMessage(contact: String, message: String) {
@@ -34,6 +38,18 @@ class ChatPresenter(val view:ChatContract.View):ChatContract.Presenter {
             val conversation = EMClient.getInstance().chatManager().getConversation(username)//同步的方法
             messages.addAll(conversation.allMessages)
             uiThread { view.onMessageLoaded() }
+        }
+
+    }
+
+    override fun loadMoreMessages(username: String) {
+        doAsync {
+            val conversation = EMClient.getInstance().chatManager().getConversation(username)//同步的方法
+            val startMsgId = messages[0].msgId
+            val loadMoreMsgFromDB = conversation.loadMoreMsgFromDB(startMsgId, PAGE_SIZE)
+            messages.addAll(0,loadMoreMsgFromDB)
+            uiThread { view.onMoreMessageLoaded(loadMoreMsgFromDB.size) }
+
         }
 
     }

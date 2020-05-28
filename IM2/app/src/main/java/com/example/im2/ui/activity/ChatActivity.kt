@@ -7,6 +7,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.homeworkplatform.BaseActivity
 import com.example.im2.R
 import com.example.im2.adapter.EMMessageListenerAdapter
@@ -65,6 +66,22 @@ class ChatActivity:BaseActivity(),ChatContract.View {
             layoutManager = LinearLayoutManager(context)
             Log.d(TAG,"开始设置adapter")
             adapter = MessageListAdapter(context,presenter.messages)
+
+            addOnScrollListener(object :RecyclerView.OnScrollListener(){
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    //当rv是一个空闲的状态
+                    //检查是否滑动到顶部，要加载更多数据
+                    if(newState == RecyclerView.SCROLL_STATE_IDLE){//空闲
+                        //如果第一个可见条目的位置是0，为滑倒顶部
+                        val linearLayoutManager = layoutManager as LinearLayoutManager
+                        if (linearLayoutManager.findFirstVisibleItemPosition() == 0){
+                            //加载更多数据
+                            presenter.loadMoreMessages(username)
+                        }
+
+                    }
+                }
+            })
         }
     }
 
@@ -140,6 +157,11 @@ class ChatActivity:BaseActivity(),ChatContract.View {
     override fun onMessageLoaded() {
         recyclerView.adapter?.notifyDataSetChanged()
         scrollToBottom()
+    }
+
+    override fun onMoreMessageLoaded(size: Int) {
+        recyclerView.adapter?.notifyDataSetChanged()
+        recyclerView.scrollToPosition(size)
     }
 
     override fun onDestroy() {
