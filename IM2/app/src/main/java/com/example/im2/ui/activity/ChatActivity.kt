@@ -9,9 +9,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworkplatform.BaseActivity
 import com.example.im2.R
+import com.example.im2.adapter.EMMessageListenerAdapter
 import com.example.im2.adapter.MessageListAdapter
 import com.example.im2.contract.ChatContract
 import com.example.im2.presenter.ChatPresenter
+import com.hyphenate.chat.EMClient
+import com.hyphenate.chat.EMMessage
 import kotlinx.android.synthetic.main.activity_chat.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.toast
@@ -27,6 +30,15 @@ class ChatActivity:BaseActivity(),ChatContract.View {
     override fun getLayoutResId(): Int
         = R.layout.activity_chat
 
+    //收消息的监听器
+    val messageListener = object: EMMessageListenerAdapter(){
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
+            presenter.addMessage(username,p0)
+            runOnUiThread { recyclerView.adapter?.notifyDataSetChanged() }
+        }
+
+    }
+
     override fun init() {
 
         Log.d(TAG,"到达ChatActivity")
@@ -37,6 +49,7 @@ class ChatActivity:BaseActivity(),ChatContract.View {
         Log.d(TAG,"initEditText")
 
         initRecyclerView()
+        EMClient.getInstance().chatManager().addMessageListener(messageListener)
         //发送消息
         send.setOnClickListener { send() }
     }
@@ -111,5 +124,10 @@ class ChatActivity:BaseActivity(),ChatContract.View {
         //加载变成出错
         recyclerView.adapter?.notifyDataSetChanged()
         toast(R.string.send_message_failed)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener)
     }
 }

@@ -27,4 +27,13 @@ class ChatPresenter(val view:ChatContract.View):ChatContract.Presenter {
 
 
     }
+
+    fun addMessage(username: String, p0: MutableList<EMMessage>?) {
+        //加入当前的消息列表
+        p0?.let { messages.addAll(it) }
+        //更新消息为已读消息
+        //获取绘画，然后标记会话里面的消息为全部已读
+        val conversation = EMClient.getInstance().chatManager().getConversation(username)
+        conversation.markAllMessagesAsRead()
+    }
 }
