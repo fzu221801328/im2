@@ -4,6 +4,7 @@ import com.example.im2.adapter.EMCallBackAdapter
 import com.example.im2.contract.ChatContract
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMMessage
+import org.jetbrains.anko.doAsync
 
 class ChatPresenter(val view:ChatContract.View):ChatContract.Presenter {
 
@@ -25,6 +26,15 @@ class ChatPresenter(val view:ChatContract.View):ChatContract.Presenter {
         view.onStartSendMessage()
         EMClient.getInstance().chatManager().sendMessage(emMessage)
 
+
+    }
+
+    override fun loadMessages(username: String) {
+        doAsync {
+            val conversation = EMClient.getInstance().chatManager().getConversation(username)//同步的方法
+            messages.addAll(conversation.allMessages)
+            uiThread { view.onMessageLoaded() }
+        }
 
     }
 

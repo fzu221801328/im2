@@ -55,6 +55,8 @@ class ChatActivity:BaseActivity(),ChatContract.View {
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
         //发送消息
         send.setOnClickListener { send() }
+
+        presenter.loadMessages(username)
     }
 
     private fun initRecyclerView() {
@@ -133,6 +135,11 @@ class ChatActivity:BaseActivity(),ChatContract.View {
         //加载变成出错
         recyclerView.adapter?.notifyDataSetChanged()
         toast(R.string.send_message_failed)
+    }
+
+    override fun onMessageLoaded() {
+        recyclerView.adapter?.notifyDataSetChanged()
+        scrollToBottom()
     }
 
     override fun onDestroy() {
