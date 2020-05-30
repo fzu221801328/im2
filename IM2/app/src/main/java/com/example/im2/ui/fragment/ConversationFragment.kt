@@ -39,7 +39,7 @@ class ConversationFragment:BaseFragment() {
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
 
-        loadConversations()
+       // loadConversations()因为onresume已经加载过一次了
     }
 
     private fun loadConversations() {
