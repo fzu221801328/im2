@@ -4,8 +4,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.homeworkplatform.BaseFragment
 import com.example.im2.R
 import com.example.im2.adapter.ConversationListAdapter
+import com.example.im2.adapter.EMMessageListenerAdapter
 import com.hyphenate.chat.EMClient
 import com.hyphenate.chat.EMConversation
+import com.hyphenate.chat.EMMessage
 import kotlinx.android.synthetic.main.fragment_conversation.*
 import kotlinx.android.synthetic.main.header.*
 import org.jetbrains.anko.doAsync
@@ -14,6 +16,12 @@ import org.jetbrains.anko.uiThread
 class ConversationFragment:BaseFragment() {
 
     val conversations = mutableListOf<EMConversation>()//环信的conversation类啊
+
+    val messageListener = object :EMMessageListenerAdapter(){
+        override fun onMessageReceived(p0: MutableList<EMMessage>?) {
+            loadConversations()
+        }
+    }
 
     override fun getLayoutResId(): Int
         = R.layout.fragment_conversation
@@ -29,11 +37,15 @@ class ConversationFragment:BaseFragment() {
             adapter = ConversationListAdapter(context,conversations)
         }
 
+        EMClient.getInstance().chatManager().addMessageListener(messageListener)
+
         loadConversations()
     }
 
     private fun loadConversations() {
         doAsync {
+            //先清空一下
+            conversations.clear()
             //怎么转到我们能用的conversation，应该可以通过这个获得参数->加到会话数据列表里
             val allConversations = EMClient.getInstance().chatManager().allConversations
             conversations.addAll(allConversations.values)//只要数据部分
@@ -42,5 +54,10 @@ class ConversationFragment:BaseFragment() {
             uiThread { recyclerView.adapter?.notifyDataSetChanged() }
 
         }
-}
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EMClient.getInstance().chatManager().removeMessageListener(messageListener)
+    }
 }
