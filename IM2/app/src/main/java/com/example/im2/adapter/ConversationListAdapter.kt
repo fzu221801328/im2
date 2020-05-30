@@ -4,8 +4,10 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.im2.ui.activity.ChatActivity
 import com.example.im2.ui.widget.ConversationListItemView
 import com.hyphenate.chat.EMConversation
+import org.jetbrains.anko.startActivity
 
 //list
 //6 想办法获得数据以后，创建了数据集合，设置到adapter里,,,再把它val成一个属性
@@ -32,10 +34,16 @@ class ConversationListAdapter(
         //传入对应位置的数据
         conversationListItemView.bindView(conversations[position])
 
+        //在这里设置监听器
+        conversationListItemView.setOnClickListener { context.startActivity<ChatActivity>(
+            "username" to conversations[position].conversationId()
+        ) }
     }
 
     //1创建viewholder继承自RecyclerView.ViewHolder
     class ConversationListItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
+
+
 }

@@ -60,4 +60,9 @@ class ConversationFragment:BaseFragment() {
         super.onDestroy()
         EMClient.getInstance().chatManager().removeMessageListener(messageListener)
     }
+
+    override fun onResume() {
+        super.onResume()
+        loadConversations()
+    }
 }
