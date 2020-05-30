@@ -1,6 +1,8 @@
 package com.example.im2.app
 
+import android.app.ActivityManager
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import cn.bmob.v3.Bmob
 import com.example.im2.BuildConfig
@@ -33,6 +35,17 @@ class IMApplication:Application() {
         Bmob.initialize(applicationContext,"c35ee4f69cd9e311605133f1fcf2264f")
 
         EMClient.getInstance().chatManager().addMessageListener(messageListener)
+    }
+
+    private fun isForeground():Boolean{
+        val activityManager = getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+        for(runningAppProgress in activityManager.runningAppProcesses){
+            if (runningAppProgress.processName==packageName){
+                //找到了app的进程
+                return runningAppProgress.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND
+            }
+        }
+        return false
     }
 
 }
