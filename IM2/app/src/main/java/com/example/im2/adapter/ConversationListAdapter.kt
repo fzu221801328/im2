@@ -26,7 +26,11 @@ class ConversationListAdapter(
     //7 设置真实的大小
     override fun getItemCount(): Int = conversations.size
 
+    //8 条目的真实数据显示->条目的绑定
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val conversationListItemView = holder.itemView as ConversationListItemView
+        //传入对应位置的数据
+        conversationListItemView.bindView(conversations[position])
 
     }
 
